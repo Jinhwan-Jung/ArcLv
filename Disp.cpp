@@ -26,7 +26,7 @@ bool    fireworkVisible = false;    // 현재 폭죽 상태 (켜짐/꺼짐)
 TFT_eSPI tft = TFT_eSPI();      
 
 
-#define TFT_VIVID_ORANGE 0xFBE0   // (255,120,0)
+#define TFT_VIVID_ORANGE 0xFBE0     // (255,120,0)
 
 // 레벨 색상표 (아래에서 위로 순서)
 uint16_t levelColors[5] = {
