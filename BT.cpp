@@ -20,6 +20,7 @@ BluetoothSerial SerialBT;
 // 상태 변수
 String  sysState = "STOP";      // START/STOP 상태
 int     arcLevel = 1;           // 1~5 레벨
+bool    updated  = false;       // 상태 변화 여부 플래그
 
 
 /**
@@ -43,29 +44,32 @@ void BT_Init(void)
 */
 void BT_Task(void)
 {
-    bool updated = false;                   // 상태 변화 여부 플래그
+//    bool updated = false;                   // 상태 변화 여부 플래그
     
     if (SerialBT.available()) {
         char cmd = SerialBT.read();
-        Serial.write(cmd);
+        //Serial.write(cmd);
 
         if (cmd == '\r' || cmd == '\n') 
             return;
 
         switch (cmd) {
-            case 's': sysState = "START"; updated = true; break;
-            case 't': sysState = "STOP";  updated = true; break;
-            case '1': arcLevel = 1;       updated = true; break;
-            case '2': arcLevel = 2;       updated = true; break;
-            case '3': arcLevel = 3;       updated = true; break;
-            case '4': arcLevel = 4;       updated = true; break;
-            case '5': arcLevel = 5;       updated = true; break;
-            default :                                     break;
-        }
-        
-        if (updated) {
-            Disp_ShowStatus();
-            Disp_UpdateFireworkTicker();   // ⭐ 상태 바뀔 때마다 다시 세팅
+            case 't': if (sysState != "STOP") { sysState = "STOP";  updated = true; } break;
+
+            case 's': if (sysState == "STOP") { sysState = "START"; updated = true; } break;            
+            case '1': if (sysState == "STOP") { arcLevel = 1;       updated = true; } break;
+            case '2': if (sysState == "STOP") { arcLevel = 2;       updated = true; } break;
+            case '3': if (sysState == "STOP") { arcLevel = 3;       updated = true; } break;
+            case '4': if (sysState == "STOP") { arcLevel = 4;       updated = true; } break;
+            case '5': if (sysState == "STOP") { arcLevel = 5;       updated = true; } break;
+            default :                                                                 break;
         }
     }
+        
+    if (updated) {
+        updated = false;
+        Disp_ShowStatus();
+        Disp_UpdateFireworkTicker();   // ⭐ 상태 바뀔 때마다 다시 세팅
+    }
 }
+

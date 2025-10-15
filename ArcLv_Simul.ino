@@ -28,4 +28,9 @@ void setup() {
 */
 void loop() {
     BT_Task();
+    TaskMgr_ArcGen();
+
+    IoCtrl_SwToPin();
 }
+
+

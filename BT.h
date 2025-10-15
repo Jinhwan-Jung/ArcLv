@@ -12,6 +12,7 @@
 
 extern String  sysState;
 extern int     arcLevel;
+extern bool    updated;
 
 extern void BT_Init(void);
 extern void BT_Task(void);

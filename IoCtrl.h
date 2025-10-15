@@ -10,5 +10,8 @@
 #define __IO_CTRL_h
 
 extern void IoCtrl_Init(void);
+extern void IoCtrl_SwToPin(void);
+extern void IoCtrl_ArcOn(void);
+extern void IoCtrl_ArcOff(void);
 
 #endif
