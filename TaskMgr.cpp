@@ -11,9 +11,8 @@
 
 #define M_ARC_ACT_TIME_5SEC     (5 * 1000)  // 1ms 주기로 설정
 #define M_ARC_START_DELAY       (500)       // 패턴 시작 후 500ms 대기
-#define M_ARC_ON_TIME_50MS      (150)
-#define M_ARC_ON_TIME_100MS     (300)
-
+#define M_ARC_ON_TIME_50MS      (50)
+#define M_ARC_ON_TIME_100MS     (150)
 
 
 /**
