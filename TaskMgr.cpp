@@ -11,7 +11,7 @@
 
 #define M_ARC_ACT_TIME_5SEC     (5 * 1000)  // 1ms 주기로 설정
 #define M_ARC_START_DELAY       (500)       // 패턴 시작 후 500ms 대기
-#define M_ARC_ON_TIME_50MS      (50)
+#define M_ARC_ON_TIME_50MS      (100)
 #define M_ARC_ON_TIME_100MS     (150)
 
 
@@ -153,21 +153,21 @@ static void TaskMgr_ArcLv_2(int sysTime)
 */
 static void TaskMgr_ArcLv_3(int sysTime)
 {
-    static int  arcSchedule[5];
+    static int  arcSchedule[8];
     static bool initialized = false;
 
     if (!initialized && sysTime == M_ARC_ACT_TIME_5SEC) {
         int base = M_ARC_ACT_TIME_5SEC - M_ARC_START_DELAY; // 4500
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < 8; i++) {
             arcSchedule[i] = base - random(100, 4000);      // 100~4000ms 내
         }
         initialized = true;
     }
 
     bool active = false;
-    for (int i = 0; i < 5; i++) {
+    for (int i = 0; i < 8; i++) {
         if ((sysTime <= arcSchedule[i]) &&
-            (sysTime >  arcSchedule[i] - M_ARC_ON_TIME_50MS)) {
+            (sysTime >  arcSchedule[i] - M_ARC_ON_TIME_100MS)) {
             active = true;
             break;
         }
@@ -191,19 +191,19 @@ static void TaskMgr_ArcLv_3(int sysTime)
 */
 static void TaskMgr_ArcLv_4(int sysTime)
 {
-    static int  arcSchedule[10];
+    static int  arcSchedule[17];
     static bool initialized = false;
 
     if (!initialized && sysTime == M_ARC_ACT_TIME_5SEC) {
         int base = M_ARC_ACT_TIME_5SEC - M_ARC_START_DELAY;
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 17; i++) {
             arcSchedule[i] = base - random(100, 4000);
         }
         initialized = true;
     }
 
     bool active = false;
-    for (int i = 0; i < 10; i++) {
+    for (int i = 0; i < 17; i++) {
         if ((sysTime <= arcSchedule[i]) &&
             (sysTime >  arcSchedule[i] - M_ARC_ON_TIME_100MS)) {
             active = true;
