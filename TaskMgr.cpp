@@ -72,8 +72,8 @@ void TaskMgr_ArcGen(void)
         TaskMgr_Sys1ms_flg = false;
 
         // 아크 발생 시간 시작 설정
-        if (sysState_Old != sysState) {
-            sysState_Old = sysState;
+        if (strcmp(sysState_Old, sysState.c_str()) != 0) {
+            strcpy(sysState_Old, sysState.c_str());
 
             if (sysState == "START") {
                 TaskMgr_ArcActTime = M_ARC_ACT_TIME_5SEC;
