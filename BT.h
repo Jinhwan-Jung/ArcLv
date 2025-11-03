@@ -10,9 +10,12 @@
 #define __BT_h
 
 
-extern String  sysState;
-extern int     arcLevel;
-extern bool    updated;
+extern String   sysState;
+extern int      arcLevel;
+extern bool     updated;
+
+extern bool     btConnected;
+
 
 extern void BT_Init(void);
 extern void BT_Task(void);

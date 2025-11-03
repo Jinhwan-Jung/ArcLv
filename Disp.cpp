@@ -51,6 +51,7 @@ uint16_t levelColors[5] = {
 static void Disp_FireworkBlink(void);
 static void Disp_DrawFirework(bool on);
 static void Disp_ClearFireworkArea(void);
+static void Disp_BT_icon(bool stat);
 
 /**
 ****************************************************************
@@ -114,6 +115,8 @@ void Disp_ShowStatus() {
             tft.drawRect(barX, rectY - barH, barW, barH, TFT_WHITE);
         }
     }
+
+    Disp_BT_icon(btConnected);
 }
 
 
@@ -202,3 +205,37 @@ static void Disp_ClearFireworkArea(void) {
         (M_FIRE_POS_Y2 - M_FIRE_POS_Y1) + (M_FIRE_MARGIN * 2),
         TFT_BLACK);
 }
+
+
+/**
+****************************************************************
+    Function : Disp_BT_icon
+****************************************************************
+*/
+static void Disp_BT_icon(bool stat) 
+{
+    // --- 블루투스 연결 아이콘 표시 (좌측 상단) ---
+    int bx = 10;   // X 위치
+    int by = 10;   // Y 위치
+    int r  = 8;    // 🔵 원 반지름 (기존보다 약 20% 축소)
+    int d  = r * 2 + 4;  // 배경 클리어용 영역 크기
+
+    // 배경 클리어 (아이콘 영역만)
+    tft.fillRect(bx - 2, by - 2, d, d, TFT_BLACK);
+
+    if (stat) {
+        // 🔵 연결됨: 밝은 하늘색 꽉찬 원 + 청록색 테두리
+        tft.fillCircle(bx + r, by + r, r, TFT_CYAN);
+        tft.drawCircle(bx + r, by + r, r, TFT_DARKCYAN);
+    } 
+    else {
+        // ⚫ 끊김: 회색 원 + 빨간 X
+        tft.fillCircle(bx + r, by + r, r, TFT_DARKGREY);
+        tft.drawCircle(bx + r, by + r, r, TFT_BLACK);
+
+        // 🔴 빨간 X 표시
+        tft.drawLine(bx + 4, by + 4, bx + 2*r - 4, by + 2*r - 4, TFT_RED);
+        tft.drawLine(bx + 2*r - 4, by + 4, bx + 4, by + 2*r - 4, TFT_RED);
+    }
+}
+

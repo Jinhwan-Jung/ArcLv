@@ -22,6 +22,7 @@ String  sysState = "STOP";      // START/STOP 상태
 int     arcLevel = 1;           // 1~5 레벨
 bool    updated  = false;       // 상태 변화 여부 플래그
 
+bool    btConnected = false;    // 🔵 블루투스 연결 상태
 
 /**
 ****************************************************************
@@ -71,5 +72,12 @@ void BT_Task(void)
         Disp_ShowStatus();
         Disp_UpdateFireworkTicker();   // ⭐ 상태 바뀔 때마다 다시 세팅
     }
+
+    // 🔵 연결 상태 갱신 (매 주기 확인)
+    bool currentConn = SerialBT.hasClient();
+    if (currentConn != btConnected) {
+        btConnected = currentConn;
+        Disp_ShowStatus();            // 아이콘 갱신
+    }    
 }
 
