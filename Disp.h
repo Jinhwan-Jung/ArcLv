@@ -14,4 +14,8 @@ extern void Disp_DrawArcEffect(void);
 
 extern void Disp_UpdateFireworkTicker(void);
 
+/* ★ 추가: 안전한 렌더링을 위한 루프측 처리 및 일시정지 제어 */
+extern void Disp_Task(void);
+extern void Disp_FireworkPause(bool on);
+
 #endif

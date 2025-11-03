@@ -22,6 +22,11 @@
 Ticker Disp_Firework_Ticker;   // 폭죽 깜빡임 타이머
 bool fireworkVisible = false;  // 현재 폭죽 상태 (켜짐/꺼짐)
 
+/* ★ 안전 렌더링용 업데이트 요청 플래그 */
+static volatile bool Disp_Firework_UpdateReq = false;
+static bool          Disp_Firework_Paused    = false;    // ★ 반드시 이 줄 포함
+
+
 
 /**
 ****************************************************************
@@ -52,6 +57,7 @@ static void Disp_FireworkBlink(void);
 static void Disp_DrawFirework(bool on);
 static void Disp_ClearFireworkArea(void);
 static void Disp_BT_icon(bool stat);
+
 
 /**
 ****************************************************************
@@ -116,6 +122,7 @@ void Disp_ShowStatus() {
         }
     }
 
+    // --- 블루투스 아이콘 ---
     Disp_BT_icon(btConnected);
 }
 
@@ -144,14 +151,29 @@ void Disp_UpdateFireworkTicker(void) {
     Disp_Firework_Ticker.attach(interval, Disp_FireworkBlink);
 }
 
+
 /**
 ****************************************************************
-    Function : fireworkBlink
+    Function : Disp_FireworkBlink
 ****************************************************************
 */
 static void Disp_FireworkBlink(void) {
     fireworkVisible = !fireworkVisible;  // 상태 토글
-    Disp_DrawFirework(fireworkVisible);
+    Disp_Firework_UpdateReq = true;      // 루프에서 렌더링하도록 요청
+}
+
+
+/**
+****************************************************************
+    Function : Disp_Task - 루프에서 호출
+****************************************************************
+*/
+void Disp_Task(void)
+{
+    if (Disp_Firework_UpdateReq) {
+        Disp_Firework_UpdateReq = false;
+        Disp_DrawFirework(fireworkVisible);
+    }
 }
 
 
@@ -249,5 +271,17 @@ static void Disp_BT_icon(bool stat)
     // 추가 교차선 (로고 중앙)
     tft.drawLine(midX, cy,       midX + 6, cy - 4,   color);
     tft.drawLine(midX, cy,       midX + 6, cy + 4,   color);
+}
+
+
+/**
+****************************************************************
+    Function : Disp_FireworkPause
+****************************************************************
+*/
+void Disp_FireworkPause(bool on)
+{
+    Disp_Firework_Paused = on;
+    Disp_UpdateFireworkTicker();
 }
 

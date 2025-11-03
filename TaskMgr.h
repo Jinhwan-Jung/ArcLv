@@ -14,7 +14,7 @@ extern volatile bool task1msFlag ;      // 1ms마다 세트되는 플래그
 
 
 extern void TaskMgr_Init(void);
-extern void TaskMgr_1ms(void);
+
 
 extern void TaskMgr_ArcGen(void);
 

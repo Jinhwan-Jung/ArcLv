@@ -31,6 +31,9 @@ void loop() {
     TaskMgr_ArcGen();
 
     IoCtrl_SwToPin();
+
+	/* ★ 안전 렌더링 처리 */
+	Disp_Task();    
 }
 
 
