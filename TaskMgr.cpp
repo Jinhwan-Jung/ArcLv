@@ -84,16 +84,25 @@ void TaskMgr_ArcGen(void)
     }
 }
 
-static void TaskMgr_ArcLv_1(int sysTime) { IoCtrl_ArcOff(); }
+static void TaskMgr_ArcLv_1(int sysTime)
+{ 
+    IoCtrl_ArcOff(); 
+}
+
 
 static void TaskMgr_ArcLv_2(int sysTime)
 {
     int start = M_ARC_ACT_TIME_5SEC;
-    int end   = start - M_ARC_ON_TIME_50MS;
+    int end   = start - M_ARC_ON_TIME_100MS - M_ARC_ON_TIME_50MS;
 
-    if  ((sysTime <= start) && (sysTime > end)) IoCtrl_ArcOn();
-    else                                        IoCtrl_ArcOff();
+    if  ((sysTime <= start) && (sysTime > end)) {
+        IoCtrl_ArcOn();
+    }
+    else {
+        IoCtrl_ArcOff();
+    }
 }
+
 
 static void TaskMgr_ArcLv_3(int sysTime)
 {
